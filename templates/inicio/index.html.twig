@@ -1,14 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ControladorInicioController!{% endblock %}
+{% block title %}Inicio{% endblock %}
 
 {% block body %}
+
+{#    muestro una tarjeta Bootstrap con el contenido del menu de inicio#}
 <div class="container mt-5">
     <div class="d-flex justify-content-center h-100">
         <div class="card" style='width:24rem;'>
             <div class="card-header d-flex flex-column">
-                <img class="img-thumbnail" src="../../logo.jpg" alt="logo"/>
-                <a type="button" class="btn btn-info rounded-pill" href="{{ path('app_nuevo_usuario') }}">Crear Cuenta</a>
+                <img class="img-thumbnail" src="{{ asset('logo.jpg') }}" alt="logoInicio"/>
+{#                muestro dos links a las pantallas de login y nuevo usuario#}
+                <a class="btn btn-info rounded-pill" href="{{ path('app_nuevo_usuario') }}">Crear Cuenta</a>
                 <a class="btn btn-danger rounded-pill mt-2" href="{{ path('app_login') }}">Iniciar Sesión</a>
             </div>
         </div>

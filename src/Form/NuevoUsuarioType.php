@@ -13,6 +13,7 @@ class NuevoUsuarioType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // añado los campos del formulario
         $builder
             ->add('usuario', EmailType::class)
             ->add('password', PasswordType::class)

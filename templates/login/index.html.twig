@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ControladorLoginController!{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block body %}
-
+{#    comprueba si se ha definido un mensaje de existo o de error y lo muestra#}
     {% if message is defined %}
         <div class="alert alert-success">{{ message }}</div>
     {% endif %}
@@ -12,6 +12,7 @@
         <div class="alert alert-danger">{{ error_message }}</div>
     {% endif %}
 
+{#    muestra el formulario#}
     <div class="container mt-5">
         <div class="d-flex justify-content-center h-100">
             <div class="card" style='width:24rem;'>
@@ -19,8 +20,8 @@
                     <h3><i class="fa fa-cog mr-1"></i>Inicia sesión</h3>
                 </div>
                 <div class="card-body">
+{#                    renderiza el formulario#}
                     {{ form(form) }}
-
                     <a href="{{ path('app_inicio') }}">Volver</a>
                 </div>
             </div>

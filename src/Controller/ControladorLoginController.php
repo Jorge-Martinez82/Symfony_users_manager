@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+// importo las clases
 use App\Entity\Usuarios;
 use App\Form\LoginType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,34 +13,35 @@ use Symfony\Component\Routing\Annotation\Route;
 class ControladorLoginController extends AbstractController
 {
 
-    #[Route('/login', name: 'app_login')]
+    #[Route('/login', name: 'app_login')]// defino la ruta y su nombre
+    // la funcion acepta una clase entity para interactuar con la BD y un request para procesar el formulario
     public function login(EntityManagerInterface $entityManager, Request $request): Response
     {
 
-        // Crear el formulario de login
+        // creo el formulario del tipo Login
         $form = $this->createForm(LoginType::class);
+        // proceso los datos de la solicitud
         $form->handleRequest($request);
 
-        // Verificar si el formulario ha sido enviado y es válido
+        // comprueba si el formulario se ha enviado y es valido
         if ($form->isSubmitted() && $form->isValid()) {
-            // Obtener los datos del formulario
+            // obtiene los datos del formulario
             $formData = $form->getData();
 
-            // Buscar el usuario en la base de datos por el correo electrónico
+            // obtengo el repositorio de la clase Usuarios y busco el usuario en la base de datos
             $userRepository = $entityManager->getRepository(Usuarios::class);
             $user = $userRepository->findOneBy(['usuario' => $formData['usuario']]);
 
-            // Verificar si el usuario existe
+            // verifica si el usuario existe y su contraseña coincide
             if ($user && $user->getPassword() === $formData['password']) {
-                // El usuario existe en la base de datos y la contraseña coincide
-                // Mostrar un mensaje de éxito en la misma página
+                // recarga la pagina mostrando un mensaje de exito
                 return $this->render('login/index.html.twig', [
                     'form' => $form->createView(),
                     'message' => 'Login realizado correctamente',
                 ]);
             } else {
-                // El usuario no existe en la base de datos o la contraseña no coincide
-                // Mostrar un mensaje de error o redirigir al formulario de login con un mensaje de error
+                // si el  usuario no existe en la base de datos o la contraseña no coincide
+                // recarga la pagina con un mensaje de error
                 return $this->render('login/index.html.twig', [
                     'form' => $form->createView(),
                     'error_message' => 'Usuario o contraseña incorrectos',
@@ -48,7 +49,7 @@ class ControladorLoginController extends AbstractController
             }
         }
 
-        // Si el formulario no ha sido enviado o no es válido, simplemente renderizar el formulario
+        // si el formulario no ha sido enviado simplemente renderizar el formulario
         return $this->render('login/index.html.twig', [
             'form' => $form->createView(),
         ]);
